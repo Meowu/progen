@@ -9,7 +9,7 @@ type QuestionMap = {
   choices?: string[];
   default?: any;
 }
-export const promptForMissingOptions = async (options: argumentOptions): Promise<argumentOptions> => {
+export const promptForMissingOptions = async (options: argumentOptions): Promise<argumentOptions & {template: string}> => {
   const defaultTemplate = 'TypeScript';
   if (options.skipPrompts) {
     return {

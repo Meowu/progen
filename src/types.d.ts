@@ -3,4 +3,6 @@ export interface argumentOptions {
   git: boolean;
   runInstall: boolean;
   skipPrompts: boolean;
+  targetDirectory?: string;
+  templateDirectory?: string;
 }

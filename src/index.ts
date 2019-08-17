@@ -1,6 +1,8 @@
 import arg from 'arg'
 import { argumentOptions } from './types'
 import { promptForMissingOptions } from './prompt'
+import { createProject } from './create'
+
 
 const parseArgs = (rawArgs: string[]): argumentOptions => {
   const args = arg(
@@ -25,7 +27,8 @@ const parseArgs = (rawArgs: string[]): argumentOptions => {
 }
 
 export const run = async (args: string[]) => {
-  let options = parseArgs(args)
-  options = await promptForMissingOptions(options)
+  const options = parseArgs(args)
+  const optionsWithDefaultValue: argumentOptions & {template: string} = await promptForMissingOptions(options)
   console.log('option', options)
+  await createProject(optionsWithDefaultValue)
 }
