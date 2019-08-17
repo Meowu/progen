@@ -5,6 +5,10 @@ import path from 'path'
 import { URL } from 'url'
 import { promisify } from 'util'
 import { argumentOptions } from './types'
+import Listr from 'listr'
+import { initGit } from './git'
+import { projectInstall } from 'pkg-install'
+
 
 const access = promisify(fs.access)
 const copy = promisify(ncp)
@@ -36,9 +40,31 @@ export async function createProject(options: argumentOptions & {template: string
     console.log('%s Invalid template name', chalk.red.bold('ERROR'))
     process.exit(1)
   }
-  
-  console.log('Copy projects files')
-  await copyTemplateFiles(options)
+
+  const tasks = new Listr([
+    {
+      title: 'Copy project files',
+      task: () => copyTemplateFiles(options)
+    },
+    {
+      title: 'Initialize git',
+      enable: () => options.git,
+      task: () => initGit(options.targetDirectory!)
+    },
+    {
+      title: 'Install dependencies',
+      task: () =>
+        projectInstall({
+          cwd: options.targetDirectory
+        }),
+      skip: () => 
+        !options.runInstall 
+          ? 'Pass --install to automatically install dependencies'
+          : undefined,
+    }
+  ])
+
+  tasks.run()
 
   console.log('%s Project ready', chalk.green.bold('DONE'))
   return true
