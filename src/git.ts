@@ -1,6 +1,4 @@
 import execa from 'execa'
-import { argumentOptions } from './types'
-
 
 export const initGit = async (directory: string) => {
   // TODO: check if git installed.
