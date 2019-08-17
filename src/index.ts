@@ -1,6 +1,8 @@
 import arg from 'arg'
+import { argumentOptions } from './types'
+import { promptForMissingOptions } from './prompt'
 
-const parseArgs = (rawArgs: string[]) => {
+const parseArgs = (rawArgs: string[]): argumentOptions => {
   const args = arg(
     {
       '--git': Boolean,
@@ -22,7 +24,8 @@ const parseArgs = (rawArgs: string[]) => {
   }
 }
 
-export const run = (args: string[]) => {
-  const options = parseArgs(args)
+export const run = async (args: string[]) => {
+  let options = parseArgs(args)
+  options = await promptForMissingOptions(options)
   console.log('option', options)
 }
