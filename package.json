@@ -18,6 +18,13 @@
     "cli",
     "progen"
   ],
+  "files": [
+    "bin/",
+    "src/",
+    "dist/",
+    "templates/",
+    "README.md"
+  ],
   "author": "Meowu",
   "license": "MIT",
   "devDependencies": {
