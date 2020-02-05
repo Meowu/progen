@@ -11,10 +11,10 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/jest": "^24.0.17",
+    "@types/jest": "^24.9.1",
     "@types/node": "^12.7.1",
     "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.5.3"
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.5"
   }
 }
