@@ -7,8 +7,7 @@ import { promisify } from 'util'
 import { argumentOptions } from './types'
 import Listr from 'listr'
 import { initGit } from './git'
-import { projectInstall } from 'pkg-install'
-
+import execa from 'execa';
 
 const access = promisify(fs.access)
 const copy = promisify(ncp)
@@ -53,10 +52,9 @@ export async function createProject(options: argumentOptions & {template: string
     },
     {
       title: 'Install dependencies',
-      task: () =>
-        projectInstall({
-          cwd: options.targetDirectory
-        }),
+      task: () => execa('npm'/**todo: support yarn */, ['install'], {
+        cwd: options.targetDirectory
+      }),
       skip: () => 
         !options.runInstall 
           ? 'Pass --install to automatically install dependencies'
